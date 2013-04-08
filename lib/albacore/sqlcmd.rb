@@ -51,6 +51,7 @@ class SQLCmd
   end
 
   def check_command
+    drive = ENV['SQLServerDrive'] || ENV['SystemDrive']
     sql2012cmdPath = File.join(ENV['SystemDrive'],'program files','microsoft sql server','110','tools','binn', 'sqlcmd.exe')
     sql2008cmdPath = File.join(ENV['SystemDrive'],'program files','microsoft sql server','100','tools','binn', 'sqlcmd.exe')
     sql2005cmdPath = File.join(ENV['SystemDrive'],'program files','microsoft sql server','90','tools','binn', 'sqlcmd.exe')
