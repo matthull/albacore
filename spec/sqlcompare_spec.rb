@@ -61,6 +61,16 @@ describe SQLCompare do
     end
   end
 
+  describe 'supress error on identical databases flag' do
+    before do
+      sqlcompare.suppress_error_on_identical_databases
+    end
+
+    it 'adds /include:identical to params' do
+      sqlcompare.parameters.should include '/include:identical'
+    end
+  end
+
   describe '#execute' do
 
     context 'without a command path' do
@@ -85,7 +95,7 @@ describe SQLCompare do
       end
 
       it "passes a parameter list to run_command" do
-        
+
         sqlcompare.stub(:run_command).and_return('success')
         sqlcompare.should_receive(:run_command).with('SQLCompare',  %r(/scripts1:project/scripts.*/sync))
         sqlcompare.execute

@@ -9,7 +9,7 @@ class SQLCompare
   include Albacore::RunCommand
 
   attr_accessor :sync
-  attr_accessor :target_server, :target_db, :target_username, :target_password, :script_path
+  attr_accessor :target_server, :target_db, :target_username, :target_password, :script_path, :suppress_error_on_identical_databases
   attr_accessor :server, :database, :username, :password
 
   def initialize
@@ -52,6 +52,10 @@ class SQLCompare
     /Exclude:table:tSQLt.*'
   end
 
+  def suppress_error_on_identical_databases
+    @parameters << build_parameter('include', 'identical')
+  end
+
   # Use attributes to build a SQL Compare parameter list
   def param_list
     params = []
@@ -65,6 +69,7 @@ class SQLCompare
     params << build_parameter('password2', @password) if @password
     params << build_parameter('database2', @target_db) if @target_db
     params << build_parameter('database2', @database) if @database
+    params << build_parameter('include', 'identical') if @suppress_error_on_identical_databases
     params << '/sync' if @sync
 
     params.join(' ')
